@@ -1,4 +1,4 @@
-package com.example.myfirstapplicationever;
+package com.example.habitRacer;
 
 import android.os.Bundle;
 import android.view.View;
@@ -6,18 +6,19 @@ import android.widget.Toast;
 import android.content.Intent;
 
 import androidx.appcompat.app.AppCompatActivity;
-import com.example.myfirstapplicationever.databinding.ActivityMainBinding;
 
-public class MainActivity extends AppCompatActivity {
+import com.example.habitRacer.databinding.ActivityLoginBinding;
 
-    private ActivityMainBinding binding;
+public class LoginActivity extends AppCompatActivity {
+
+    private ActivityLoginBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         // Инициализация на View Binding
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         // Логика за Login бутона
@@ -28,9 +29,9 @@ public class MainActivity extends AppCompatActivity {
                 String password = binding.password.getText().toString();
 
                 if (username.equals("user") && password.equals("1234")) {
-                    Toast.makeText(MainActivity.this, "Login Successful!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Login Successful!", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(MainActivity.this, "Login Failed!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Login Failed!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -40,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Преминаване към RegisterActivity
-                Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
+                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
                 startActivity(intent);
             }
         });

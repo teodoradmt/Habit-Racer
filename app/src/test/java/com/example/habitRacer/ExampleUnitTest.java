@@ -1,4 +1,4 @@
-package com.example.myfirstapplicationever;
+package com.example.habitRacer;
 
 import org.junit.Test;
 

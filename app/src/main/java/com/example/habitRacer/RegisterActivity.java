@@ -1,4 +1,4 @@
-package com.example.myfirstapplicationever;
+package com.example.habitRacer;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,7 +7,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.myfirstapplicationever.databinding.ActivityRegisterBinding;
+import com.example.habitRacer.databinding.ActivityRegisterBinding;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -38,7 +38,7 @@ public class RegisterActivity extends AppCompatActivity {
                     Toast.makeText(RegisterActivity.this, "Registration Successful!", Toast.LENGTH_SHORT).show();
 
                     // Изпраща към LoginActivity
-                    Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                    Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                     startActivity(intent);
                     finish();
                 }
@@ -49,7 +49,7 @@ public class RegisterActivity extends AppCompatActivity {
         binding.loginText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                 startActivity(intent);
                 finish();
             }
