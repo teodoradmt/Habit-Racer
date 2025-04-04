@@ -6,12 +6,11 @@ import android.widget.Toast;
 import android.content.Intent;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.habitRacer.databinding.ActivityLoginBinding;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private ActivityLoginBinding binding;
+    private com.example.habitRacer.databinding.ActivityLoginBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,12 +28,18 @@ public class LoginActivity extends AppCompatActivity {
                 String password = binding.password.getText().toString();
 
                 if (username.equals("user") && password.equals("1234")) {
-                    Toast.makeText(LoginActivity.this, "Login Successful!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Успешно влизане!", Toast.LENGTH_SHORT).show();
+
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
                 } else {
-                    Toast.makeText(LoginActivity.this, "Login Failed!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Невалидни данни!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
+
+
 
         // Логика за Sign Up бутона
         binding.signupButton.setOnClickListener(new View.OnClickListener() {

@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.habitRacer.databinding.ActivityRegisterBinding;
 
+
 public class RegisterActivity extends AppCompatActivity {
 
     private ActivityRegisterBinding binding;

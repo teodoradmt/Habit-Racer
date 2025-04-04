@@ -4,14 +4,64 @@
     android:id="@+id/gameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:padding="16dp"
+    tools:context="com.example.habitRacer.MainActivity">
 
-    <!-- Placeholder TextView -->
+    <!-- Брой звезди -->
     <TextView
-        android:id="@+id/welcomeText"
+        android:id="@+id/starCountText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Добре дошъл в Habit Racer!"
-        android:layout_centerInParent="true"
-        android:textSize="24sp"/>
+        android:text="⭐ 0"
+        android:textSize="20sp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:padding="8dp" />
+
+    <!-- Аватар -->
+    <ImageView
+        android:id="@+id/avatarImage"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/avatar1frogskate"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp" />
+
+    <!-- Прогрес бар (пътеката) -->
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="@android:style/Widget.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:max="100"
+        android:progress="0"
+        android:layout_below="@id/avatarImage"
+        android:layout_marginTop="30dp" />
+
+    <!-- Easy Habit -->
+    <Button
+        android:id="@+id/easyHabitButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Лесен навик ⭐"
+        android:layout_below="@id/progressBar"
+        android:layout_marginTop="40dp" />
+
+    <!-- Medium Habit -->
+    <Button
+        android:id="@+id/mediumHabitButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Среден навик ⭐⭐"
+        android:layout_below="@id/easyHabitButton"
+        android:layout_marginTop="20dp" />
+
+    <!-- Hard Habit -->
+    <Button
+        android:id="@+id/hardHabitButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Труден навик ⭐⭐⭐"
+        android:layout_below="@id/mediumHabitButton"
+        android:layout_marginTop="20dp" />
 </RelativeLayout>

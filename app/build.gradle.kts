@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.myfirstapplicationever"
+    namespace = "com.example.habitRacer"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.myfirstapplicationever"
+        applicationId = "com.example.habitRacer"
         minSdk = 26
         targetSdk = 35
         versionCode = 1
