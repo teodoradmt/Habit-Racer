@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp"
+        android:gravity="center_horizontal">
+
+        <TextView
+            android:id="@+id/habitText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Предизвикателство"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="24dp"/>
+
+        <!-- За тип TEXT -->
+        <EditText
+            android:id="@+id/inputText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Напиши тук..."
+            android:visibility="gone" />
+
+        <!-- За тип TIMER -->
+        <Button
+            android:id="@+id/startTimerButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Стартирай таймер"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/timerText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:layout_marginTop="8dp"
+            android:visibility="gone"/>
+
+        <!-- За тип CAMERA -->
+        <Button
+            android:id="@+id/openCameraButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Направи снимка"
+            android:visibility="gone" />
+
+        <!-- За тип CONFIRM -->
+        <Button
+            android:id="@+id/confirmButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Потвърди"
+            android:visibility="gone" />
+
+    </LinearLayout>
+</ScrollView>

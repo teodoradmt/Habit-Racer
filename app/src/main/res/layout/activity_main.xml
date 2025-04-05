@@ -1,67 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/gameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    tools:context="com.example.habitRacer.MainActivity">
+    android:background="@android:color/white">
 
-    <!-- Брой звезди -->
+    <!-- 🍓 Ягодки брояч -->
     <TextView
-        android:id="@+id/starCountText"
+        android:id="@+id/berryCountText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="⭐ 0"
-        android:textSize="20sp"
+        android:text="🍓 0"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="16dp" />
+
+    <!-- 👤 Аватар -->
+    <ImageView
+        android:id="@+id/avatarIcon"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/avatar1frogskate"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:padding="8dp" />
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/circle_background"
+        android:scaleType="centerCrop"
+        android:clickable="true"
+        android:focusable="true" />
 
-    <!-- Аватар -->
+    <!-- 👥 Икона за приятели -->
     <ImageView
-        android:id="@+id/avatarImage"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:src="@drawable/avatar1frogskate"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="60dp" />
+        android:id="@+id/friendsIcon"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/friends"
+        android:layout_toStartOf="@id/avatarIcon"
+        android:layout_alignTop="@id/avatarIcon"
+        android:layout_marginEnd="18dp"
+        android:clickable="true"
+        android:focusable="true" />
 
-    <!-- Прогрес бар (пътеката) -->
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="@android:style/Widget.ProgressBar.Horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:max="100"
-        android:progress="0"
-        android:layout_below="@id/avatarImage"
-        android:layout_marginTop="30dp" />
-
-    <!-- Easy Habit -->
-    <Button
-        android:id="@+id/easyHabitButton"
+    <!-- 🐸 Мотивационно съобщение -->
+    <TextView
+        android:id="@+id/motivationText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Лесен навик ⭐"
-        android:layout_below="@id/progressBar"
-        android:layout_marginTop="40dp" />
+        android:text="Днес жабата ти вярва в теб 🐸"
+        android:textSize="18sp"
+        android:textAlignment="center"
+        android:layout_below="@id/avatarIcon"
+        android:layout_marginTop="24dp" />
 
-    <!-- Medium Habit -->
-    <Button
-        android:id="@+id/mediumHabitButton"
+    <!-- 📝 Днешни навици -->
+    <TextView
+        android:id="@+id/habitTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Днешни навици:"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_below="@id/motivationText"
+        android:layout_marginTop="24dp" />
+
+    <!-- Навик: лесен -->
+    <TextView
+        android:id="@+id/easyHabitText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Среден навик ⭐⭐"
-        android:layout_below="@id/easyHabitButton"
-        android:layout_marginTop="20dp" />
+        android:text="👉 Изпий 1 чаша вода"
+        android:layout_below="@id/habitTitle"
+        android:layout_marginTop="12dp"
+        android:textSize="16sp" />
 
-    <!-- Hard Habit -->
-    <Button
-        android:id="@+id/hardHabitButton"
+    <!-- Навик: среден -->
+    <TextView
+        android:id="@+id/mediumHabitText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Труден навик ⭐⭐⭐"
-        android:layout_below="@id/mediumHabitButton"
-        android:layout_marginTop="20dp" />
+        android:text="👉 30 мин. учене"
+        android:layout_below="@id/easyHabitText"
+        android:layout_marginTop="12dp"
+        android:textSize="16sp" />
+
+    <!-- Навик: труден -->
+    <TextView
+        android:id="@+id/hardHabitText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="👉 Спортувай 20 мин."
+        android:layout_below="@id/mediumHabitText"
+        android:layout_marginTop="12dp"
+        android:textSize="16sp" />
+
+    <!-- 🛣️ Лента + Аватар за движение -->
+    <RelativeLayout
+        android:id="@+id/pathLayout"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_below="@id/hardHabitText"
+        android:layout_marginTop="32dp"
+        android:background="@color/lavender">
+
+        <ImageView
+            android:id="@+id/avatarMoving"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/avatar1frogskate"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true" />
+    </RelativeLayout>
+
+    <!-- 📅 Прогрес за седмицата -->
+    <TextView
+        android:id="@+id/weeklyProgressText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Прогрес за седмицата: 3/7"
+        android:textSize="16sp"
+        android:layout_below="@id/pathLayout"
+        android:layout_marginTop="24dp"
+        android:layout_centerHorizontal="true" />
+
 </RelativeLayout>

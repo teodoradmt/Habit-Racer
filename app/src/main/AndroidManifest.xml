@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.habitRacer">
 
-
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -14,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyFirstApplicationEver"
         tools:targetApi="31">
+        <activity
+            android:name=".HabitChallengeActivity"
+            android:exported="false" />
         <activity
             android:name=".LoginActivity"
             android:exported="false" />

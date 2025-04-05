@@ -1,72 +1,163 @@
 package com.example.habitRacer;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
-import androidx.appcompat.app.AppCompatActivity;
-import com.example.habitRacer.R;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ProgressBar progressBar;
-    private TextView starCountText;
-    private ImageView avatarImage;
+    private FirebaseAuth auth;
+    private FirebaseFirestore db;
 
-    private int progress = 0;
-    private int stars = 0;
+    private TextView easyHabitText, mediumHabitText, hardHabitText;
+    private ImageView avatarMoving;
+    private float progress = 0f;
+    private float moveStep;
+
+    private String selectedHabit = null;
+    private String selectedDifficulty = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Свързване с елементите от XML
-        progressBar = findViewById(R.id.progressBar);
-        starCountText = findViewById(R.id.starCountText);
-        avatarImage = findViewById(R.id.avatarImage);
+        auth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
 
-        Button easyBtn = findViewById(R.id.easyHabitButton);
-        Button mediumBtn = findViewById(R.id.mediumHabitButton);
-        Button hardBtn = findViewById(R.id.hardHabitButton);
+        easyHabitText = findViewById(R.id.easyHabitText);
+        mediumHabitText = findViewById(R.id.mediumHabitText);
+        hardHabitText = findViewById(R.id.hardHabitText);
+        avatarMoving = findViewById(R.id.avatarMoving);
 
-        // Бутони за навици
-        easyBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                updateProgress(10);
-                addStars(1);
-            }
-        });
+        DisplayMetrics metrics = getResources().getDisplayMetrics();
+        moveStep = metrics.widthPixels * 0.3f;
 
-        mediumBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                updateProgress(20);
-                addStars(2);
-            }
-        });
+        String uid = auth.getCurrentUser().getUid();
+        String today = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
 
-        hardBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                updateProgress(30);
-                addStars(3);
+        DocumentReference habitDoc = db.collection("users")
+                .document(uid)
+                .collection("dailyHabits")
+                .document(today);
+
+        habitDoc.get().addOnSuccessListener(snapshot -> {
+            if (snapshot.exists()) {
+                showHabits(snapshot);
+            } else {
+                generateDailyHabits(habitDoc);
             }
         });
     }
 
-    private void updateProgress(int amount) {
-        progress += amount;
-        if (progress > 100) progress = 100;
-        progressBar.setProgress(progress);
+    private void showHabits(DocumentSnapshot snapshot) {
+        String easy = snapshot.getString("easy");
+        String medium = snapshot.getString("medium");
+        String hard = snapshot.getString("hard");
+
+        easyHabitText.setText("\uD83C\uDF53 1. " + easy);
+        mediumHabitText.setText("\uD83C\uDF53 2. " + medium);
+        hardHabitText.setText("\uD83C\uDF53 3. " + hard);
+
+        setHabitListeners(easy, medium, hard);
     }
 
-    private void addStars(int amount) {
-        stars += amount;
-        starCountText.setText("⭐ " + stars);
+    private void generateDailyHabits(DocumentReference habitDoc) {
+        getRandomHabit("easyHabits", easy -> {
+            getRandomHabit("mediumHabit", medium -> {
+                getRandomHabit("hardHabit", hard -> {
+
+                    Map<String, Object> data = new HashMap<>();
+                    data.put("easy", easy);
+                    data.put("medium", medium);
+                    data.put("hard", hard);
+                    data.put("selected", null);
+                    data.put("completed", false);
+
+                    habitDoc.set(data).addOnSuccessListener(unused -> {
+                        easyHabitText.setText("\uD83C\uDF53 1. " + easy);
+                        mediumHabitText.setText("\uD83C\uDF53 2. " + medium);
+                        hardHabitText.setText("\uD83C\uDF53 3. " + hard);
+                        setHabitListeners(easy, medium, hard);
+                    });
+                });
+            });
+        });
+    }
+
+    private void getRandomHabit(String collection, final OnHabitFetchedListener listener) {
+        db.collection(collection)
+                .get()
+                .addOnSuccessListener(querySnapshot -> {
+                    Random random = new Random();
+                    int index = random.nextInt(querySnapshot.size());
+                    String habit = querySnapshot.getDocuments().get(index).getString("text");
+                    String type = querySnapshot.getDocuments().get(index).getString("type");
+                    listener.onHabitFetched(habit + "||" + type);
+                });
+    }
+
+    private void setHabitListeners(String easy, String medium, String hard) {
+        easyHabitText.setOnClickListener(v -> selectHabit("easy", easy));
+        mediumHabitText.setOnClickListener(v -> selectHabit("medium", medium));
+        hardHabitText.setOnClickListener(v -> selectHabit("hard", hard));
+    }
+
+    private void selectHabit(String difficulty, String habitData) {
+        if (selectedHabit != null) return;
+
+        String[] parts = habitData.split("\\|\\|");
+        String habitText = parts[0];
+        String type = parts.length > 1 ? parts[1] : "confirm";
+
+        selectedHabit = habitText;
+        selectedDifficulty = difficulty;
+
+        if (!difficulty.equals("easy")) easyHabitText.setVisibility(View.GONE);
+        if (!difficulty.equals("medium")) mediumHabitText.setVisibility(View.GONE);
+        if (!difficulty.equals("hard")) hardHabitText.setVisibility(View.GONE);
+
+        String uid = auth.getCurrentUser().getUid();
+        String today = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+
+        DocumentReference habitDoc = db.collection("users")
+                .document(uid)
+                .collection("dailyHabits")
+                .document(today);
+
+        Map<String, Object> update = new HashMap<>();
+        update.put("selected", difficulty);
+        update.put("completed", false);
+
+        habitDoc.update(update);
+
+        Intent intent = new Intent(MainActivity.this, HabitChallengeActivity.class);
+        intent.putExtra("text", habitText);
+        intent.putExtra("type", type);
+        intent.putExtra("habitDifficulty", difficulty);
+        startActivity(intent);
+    }
+
+    interface OnHabitFetchedListener {
+        void onHabitFetched(String habitWithType);
     }
 }
