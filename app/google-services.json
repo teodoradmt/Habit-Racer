@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "328393084739",
+    "project_id": "habitracer-742b3",
+    "storage_bucket": "habitracer-742b3.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:328393084739:android:7ce778bc9b47046cc1e9f6",
+        "android_client_info": {
+          "package_name": "com.example.habitRacer"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDfaQLD_SiQSvNryROyqy888_5Qr9iGJQQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

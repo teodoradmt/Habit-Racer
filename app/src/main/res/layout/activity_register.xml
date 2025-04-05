@@ -16,10 +16,11 @@
         android:textColor="@color/lavender"/>
 
     <EditText
-        android:id="@+id/username"
+        android:id="@+id/email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Username"
+        android:hint="Email"
+        android:inputType="textEmailAddress"
         android:drawableStart="@drawable/baseline_co_present_24"
         android:padding="10dp"/>
 
