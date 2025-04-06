@@ -69,7 +69,7 @@
         android:id="@+id/easyHabitText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="👉 Изпий 1 чаша вода"
+        android:text="🍓 Изпий 1 чаша вода"
         android:layout_below="@id/habitTitle"
         android:layout_marginTop="12dp"
         android:textSize="16sp" />
@@ -79,7 +79,7 @@
         android:id="@+id/mediumHabitText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="👉 30 мин. учене"
+        android:text="🍓🍓 30 мин. учене"
         android:layout_below="@id/easyHabitText"
         android:layout_marginTop="12dp"
         android:textSize="16sp" />
@@ -89,7 +89,7 @@
         android:id="@+id/hardHabitText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="👉 Спортувай 20 мин."
+        android:text="🍓🍓🍓 Спортувай 20 мин."
         android:layout_below="@id/mediumHabitText"
         android:layout_marginTop="12dp"
         android:textSize="16sp" />
@@ -122,5 +122,15 @@
         android:layout_below="@id/pathLayout"
         android:layout_marginTop="24dp"
         android:layout_centerHorizontal="true" />
+
+    <ImageView
+        android:id="@+id/berryAnimation"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/strawberry"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="80dp"
+        android:visibility="gone" />
 
 </RelativeLayout>

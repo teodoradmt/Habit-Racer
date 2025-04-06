@@ -8,6 +8,7 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,14 +27,15 @@ import java.util.Map;
 
 public class HabitChallengeActivity extends AppCompatActivity {
 
-    private TextView habitText, timerText;
+    private TextView habitTextView, timerText;
     private EditText inputText;
     private Button startTimerButton, openCameraButton, confirmButton;
+    private ImageButton backButton;
 
     private static final int CAMERA_REQUEST_CODE = 100;
     private static final long TIMER_DURATION = 60000; // 1 минута
 
-    private String habitDifficulty;
+    private String habitText, habitType, habitDifficulty;
 
     private FirebaseFirestore db;
     private FirebaseAuth auth;
@@ -43,24 +45,34 @@ public class HabitChallengeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_habit_challenge);
 
-        habitText = findViewById(R.id.habitText);
+        habitTextView = findViewById(R.id.habitText);
         inputText = findViewById(R.id.inputText);
         startTimerButton = findViewById(R.id.startTimerButton);
         timerText = findViewById(R.id.timerText);
         openCameraButton = findViewById(R.id.openCameraButton);
         confirmButton = findViewById(R.id.confirmButton);
+        backButton = findViewById(R.id.backButton);
 
         db = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
 
         Intent intent = getIntent();
-        String type = intent.getStringExtra("type");
-        String text = intent.getStringExtra("text");
+        habitText = intent.getStringExtra("text");
+        habitType = intent.getStringExtra("type");
         habitDifficulty = intent.getStringExtra("habitDifficulty");
 
-        habitText.setText(text);
+        habitTextView.setText(habitText);
 
-        switch (type) {
+        setupByType();
+
+        backButton.setOnClickListener(v -> {
+            setResult(Activity.RESULT_CANCELED);
+            finish();
+        });
+    }
+
+    private void setupByType() {
+        switch (habitType) {
             case "text":
                 inputText.setVisibility(View.VISIBLE);
                 confirmButton.setVisibility(View.VISIBLE);
@@ -86,6 +98,7 @@ public class HabitChallengeActivity extends AppCompatActivity {
                 break;
 
             case "confirm":
+            default:
                 confirmButton.setVisibility(View.VISIBLE);
                 confirmButton.setOnClickListener(v -> onHabitCompleted());
                 break;
@@ -133,6 +146,7 @@ public class HabitChallengeActivity extends AppCompatActivity {
 
         habitDoc.update(update).addOnSuccessListener(unused -> {
             Toast.makeText(this, "Успешно изпълнен навик!", Toast.LENGTH_SHORT).show();
+            setResult(Activity.RESULT_OK);
             finish();
         }).addOnFailureListener(e -> {
             Toast.makeText(this, "Грешка при запис!", Toast.LENGTH_SHORT).show();
