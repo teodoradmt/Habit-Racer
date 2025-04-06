@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
+import android.media.MediaPlayer;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -102,28 +103,42 @@ public class MainActivity extends AppCompatActivity {
     private void playBerryAnimation(int amount) {
         ImageView berryAnim = findViewById(R.id.berryAnimation);
 
+        // Пусни звук
+        MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.berry_pop);
+        mediaPlayer.start();
+
         berryAnim.setVisibility(View.VISIBLE);
-        berryAnim.setScaleX(0f);
-        berryAnim.setScaleY(0f);
-        berryAnim.setTranslationY(100f);
+        berryAnim.setScaleX(1f);
+        berryAnim.setScaleY(1f);
+        berryAnim.setAlpha(1f);
+        berryAnim.setTranslationY(0f);
 
+        // Анимация
         berryAnim.animate()
-                .scaleX(1f).scaleY(1f)
-                .translationYBy(-100f)
-                .setDuration(500)
-                .withEndAction(() -> {
-                    berry += amount;
-                    berryCountText.setText("\uD83C\uDF53 " + berry);
-
-                    berryAnim.animate()
-                            .alpha(0f)
-                            .setDuration(300)
-                            .withEndAction(() -> {
-                                berryAnim.setAlpha(1f);
-                                berryAnim.setVisibility(View.GONE);
-                            });
-                });
+                .rotationBy(15f)
+                .setDuration(100)
+                .withEndAction(() -> berryAnim.animate()
+                        .rotationBy(-30f)
+                        .setDuration(100)
+                        .withEndAction(() -> berryAnim.animate()
+                                .rotationBy(15f)
+                                .setDuration(100)
+                                .withEndAction(() -> {
+                                    berryAnim.animate()
+                                            .translationYBy(-300f)
+                                            .alpha(0f)
+                                            .setDuration(600)
+                                            .withEndAction(() -> {
+                                                berryAnim.setVisibility(View.GONE);
+                                                berry += amount;
+                                                berryCountText.setText("🍓 " + berry);
+                                                berryAnim.setRotation(0f);
+                                                mediaPlayer.release(); // Освобождаваме ресурси
+                                            });
+                                })));
     }
+
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -236,7 +251,7 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("text", habitText);
         intent.putExtra("type", type);
         intent.putExtra("habitDifficulty", difficulty);
-        startActivity(intent);
+        startActivityForResult(intent, 1);
     }
 
     interface OnHabitFetchedListener {

@@ -146,10 +146,16 @@ public class HabitChallengeActivity extends AppCompatActivity {
 
         habitDoc.update(update).addOnSuccessListener(unused -> {
             Toast.makeText(this, "Успешно изпълнен навик!", Toast.LENGTH_SHORT).show();
-            setResult(Activity.RESULT_OK);
+
+            // 👉 ТУК добавяме резултата, за да го получи MainActivity
+            Intent resultIntent = new Intent();
+            resultIntent.putExtra("reward", habitDifficulty); // "easy", "medium", "hard"
+            setResult(RESULT_OK, resultIntent);
             finish();
+
         }).addOnFailureListener(e -> {
             Toast.makeText(this, "Грешка при запис!", Toast.LENGTH_SHORT).show();
         });
     }
 }
+
