@@ -18,8 +18,7 @@
             android:textSize="20sp"
             android:textStyle="bold"
             android:layout_marginBottom="24dp"/>
-
-        <!-- За тип TEXT -->
+        
         <EditText
             android:id="@+id/inputText"
             android:layout_width="match_parent"
@@ -27,7 +26,6 @@
             android:hint="Напиши тук..."
             android:visibility="gone" />
 
-        <!-- За тип TIMER -->
         <Button
             android:id="@+id/startTimerButton"
             android:layout_width="wrap_content"
@@ -43,7 +41,6 @@
             android:layout_marginTop="8dp"
             android:visibility="gone"/>
 
-        <!-- За тип CAMERA -->
         <Button
             android:id="@+id/openCameraButton"
             android:layout_width="wrap_content"
@@ -51,7 +48,6 @@
             android:text="Направи снимка"
             android:visibility="gone" />
 
-        <!-- За тип CONFIRM -->
         <Button
             android:id="@+id/confirmButton"
             android:layout_width="wrap_content"

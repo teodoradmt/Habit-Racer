@@ -74,13 +74,10 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-    // Проверка за сигурна парола
     private boolean isValidPassword(String password) {
         String passwordPattern = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[@#$%^&+=!]).{6,}$";
         return password.matches(passwordPattern);
     }
-
-    // Проверка за валиден имейл
     private boolean isValidEmail(String email) {
         return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
